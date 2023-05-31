@@ -1,0 +1,5 @@
+brew 'lua'
+brew 'luacheck'
+brew 'luarocks'
+brew 'stylua'
+cask 'love'

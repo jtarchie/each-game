@@ -1,0 +1,7 @@
+version: 3
+tasks:
+  default:
+    cmds:
+    - stylua .
+    - luacheck . --globals love
+    - busted spec/
