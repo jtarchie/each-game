@@ -10,6 +10,29 @@ describe("life with grid", function()
 		assert.are.same(init, grid)
 	end)
 
+	it("allows a callback on living cell", function()
+		local count = 0
+		local expectedArgs = { { 1, 2, 3 }, { 2, 2, 2 }, { 3, 2, 3 } }
+		local callback = function(x, y, neighborCount)
+			count = count + 1
+			assert.are.same(expectedArgs[count], { x, y, neighborCount })
+		end
+
+		assert.are.same(
+			life.NextGrid({
+				{ false, false, false },
+				{ true, true, true },
+				{ false, false, false },
+			}, callback),
+			{
+				{ false, true, false },
+				{ false, true, false },
+				{ false, true, false },
+			}
+		)
+		assert.are.equal(count, 3)
+	end)
+
 	describe("when a cell exists", function()
 		it("lives with two or three live neighbors", function()
 			assert.are.same(

@@ -16,7 +16,7 @@ local function countNeighborsOnGrid(grid, x, y)
 	return neighbors
 end
 
-local function NextGrid(grid)
+local function NextGrid(grid, callback)
 	local nextGrid = {}
 	for i = 1, #grid do
 		nextGrid[i] = {}
@@ -28,6 +28,9 @@ local function NextGrid(grid)
 
 			if (grid[i][j] and 2 <= liveCount and liveCount <= 3) or ((not grid[i][j]) and liveCount == 3) then
 				nextGrid[i][j] = true
+				if callback then
+					callback(i, j, liveCount)
+				end
 			end
 		end
 	end
@@ -36,6 +39,11 @@ local function NextGrid(grid)
 end
 
 local grid = {}
+local points = {}
+local pointsCallback = function(x, y, _numNeighbors)
+	table.insert(points, { x - 1, y - 1 })
+end
+
 love = love or {}
 
 function love.load()
@@ -52,19 +60,11 @@ function love.load()
 end
 
 function love.update(_dt)
-	grid = NextGrid(grid)
+	points = {}
+	grid = NextGrid(grid, pointsCallback)
 end
 
 function love.draw()
-	local points = {}
-	for x = 1, #grid do
-		for y = 1, #grid[x] do
-			if grid[x][y] then
-				table.insert(points, { x, y })
-			end
-		end
-	end
-
 	love.graphics.points(points)
 end
 
