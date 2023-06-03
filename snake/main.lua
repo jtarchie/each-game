@@ -7,16 +7,25 @@ local Player = {}
 Player.__index = Player
 
 function Player.new(...)
+	local positions = { ... }
+	local xyPositions = {}
+	for _, value in ipairs(positions) do
+		table.insert(xyPositions, {
+			x = value[1],
+			y = value[2],
+		})
+	end
+
 	local self = setmetatable({
-		body = { ... },
+		positions = xyPositions,
 		direction = RIGHT,
 	}, Player)
 
 	return self
 end
 
-function Player:positions()
-	return self.body
+function Player:getPositions()
+	return self.positions
 end
 
 function Player:setDirection(direction)
@@ -26,21 +35,21 @@ end
 function Player:update()
 	local nextPosition = {}
 
-	nextPosition[1] = self.body[1][1] + self.direction.xOffset
-	nextPosition[2] = self.body[1][2] + self.direction.yOffset
+	nextPosition.x = self.positions[1].x + self.direction.xOffset
+	nextPosition.y = self.positions[1].y + self.direction.yOffset
 
 	-- shift
-	table.insert(self.body, 1, nextPosition)
+	table.insert(self.positions, 1, nextPosition)
 	-- pop
-	table.remove(self.body)
+	table.remove(self.positions)
 end
 
 function Player:grow(length)
-	local x = self.body[#self.body][1]
-	local y = self.body[#self.body][2]
+	local x = self.positions[#self.positions].x
+	local y = self.positions[#self.positions].y
 
 	for _ = 1, length do
-		table.insert(self.body, { x, y })
+		table.insert(self.positions, { x = x, y = y })
 	end
 end
 
