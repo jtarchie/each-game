@@ -77,4 +77,21 @@ describe("snake", function()
 			assert.are.same(player:getPositions(), { { x = 3, y = 1 }, { x = 2, y = 1 }, { x = 1, y = 1 } })
 		end)
 	end)
+
+	describe("when the board has a player", function()
+		it("handles boundaries", function()
+			local width, height = 5, 5
+
+			local player = snake.NewPlayer({ width / 2, height / 2 })
+			local world = snake.NewWorld(player, width, height)
+
+			for _ = 1, 2 do
+				world:update()
+				assert.truthy(player:isAlive())
+			end
+
+			world:update()
+			assert.falsy(player:isAlive())
+		end)
+	end)
 end)
