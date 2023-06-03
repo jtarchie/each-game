@@ -1,4 +1,4 @@
-package.path = "./?/main.lua;" .. package.path
+package.path = "./snake/?.lua;./?/main.lua;" .. package.path
 
 local snake = require("snake")
 
@@ -19,7 +19,7 @@ describe("snake", function()
 		end)
 
 		it("can move right", function()
-			player:setDirection(snake.RIGHT)
+			player:setDirection(snake.Direction.RIGHT)
 			player:update()
 
 			local positions = player:getPositions()
@@ -27,7 +27,7 @@ describe("snake", function()
 		end)
 
 		it("can move left", function()
-			player:setDirection(snake.LEFT)
+			player:setDirection(snake.Direction.LEFT)
 			player:update()
 
 			local positions = player:getPositions()
@@ -35,7 +35,7 @@ describe("snake", function()
 		end)
 
 		it("can move down", function()
-			player:setDirection(snake.DOWN)
+			player:setDirection(snake.Direction.DOWN)
 			player:update()
 
 			local positions = player:getPositions()
@@ -43,7 +43,7 @@ describe("snake", function()
 		end)
 
 		it("can move up", function()
-			player:setDirection(snake.UP)
+			player:setDirection(snake.Direction.UP)
 			player:update()
 
 			local positions = player:getPositions()
