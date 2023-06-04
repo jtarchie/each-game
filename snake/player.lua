@@ -8,8 +8,8 @@ function Player.new(...)
 	local xyPositions = {}
 	for _, value in ipairs(positions) do
 		table.insert(xyPositions, {
-			x = value[1],
-			y = value[2],
+			x = math.floor(value[1]),
+			y = math.floor(value[2]),
 		})
 	end
 

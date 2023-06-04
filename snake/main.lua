@@ -30,8 +30,9 @@ function love.draw()
 end
 
 function love.keypressed(key)
-	if key == "down" then
-		player:setDirection(direction.DOWN)
+	local upper = string.upper(key)
+	if direction[upper] ~= nil then
+		player:setDirection(direction[upper])
 	end
 end
 

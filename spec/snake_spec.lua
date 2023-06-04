@@ -1,6 +1,7 @@
 package.path = "./snake/?.lua;./?/main.lua;" .. package.path
 
 local snake = require("snake")
+-- local inspect = require("inspect")
 
 describe("snake", function()
 	it("starts with a snake moving in a direction", function()
@@ -79,16 +80,58 @@ describe("snake", function()
 	end)
 
 	describe("when the board has a player", function()
-		it("handles boundaries", function()
+		it("handles boundaries to the right", function()
 			local width, height = 5, 5
 
 			local player = snake.NewPlayer({ width / 2, height / 2 })
 			local world = snake.NewWorld(player, width, height)
 
-			for _ = 1, 2 do
+			for _ = 1, 3 do
 				world:update()
 				assert.truthy(player:isAlive())
 			end
+
+			world:update()
+			assert.falsy(player:isAlive())
+		end)
+
+		it("handles boundaries to the down", function()
+			local width, height = 2, 2
+
+			local player = snake.NewPlayer({ width / 2, height / 2 })
+			local world = snake.NewWorld(player, width, height)
+			player:setDirection(snake.Direction.DOWN)
+
+			world:update()
+			assert.truthy(player:isAlive())
+
+			world:update()
+			assert.falsy(player:isAlive())
+		end)
+
+		it("handles boundaries to the up", function()
+			local width, height = 2, 2
+
+			local player = snake.NewPlayer({ width / 2, height / 2 })
+			local world = snake.NewWorld(player, width, height)
+			player:setDirection(snake.Direction.UP)
+
+			world:update()
+			assert.truthy(player:isAlive())
+
+			world:update()
+			assert.falsy(player:isAlive())
+		end)
+
+		it("handles boundaries to the left", function()
+			local width, height = 2, 2
+
+			local player = snake.NewPlayer({ width / 2, height / 2 })
+			local world = snake.NewWorld(player, width, height)
+			player:setDirection(snake.Direction.LEFT)
+
+			world:update()
+			assert.truthy(player:isAlive())
 
 			world:update()
 			assert.falsy(player:isAlive())
