@@ -142,15 +142,13 @@ describe("snake", function()
 
 	describe("when a snake grabs a food", function()
 		it("grows the player and generates a new food", function()
-			local width, height = 3, 1
+			local width, height = 2, 1
 
 			local player = snake.NewPlayer({ 1, 1 })
 			local world = snake.NewWorld(player, width, height)
 
 			world:setFoodQuantityWithGrowth(1, 1)
-			world:update()
 			assert.are.same(#player:getPositions(), 1)
-
 			world:update()
 			assert.are.same(#player:getPositions(), 2)
 		end)

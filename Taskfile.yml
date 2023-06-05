@@ -2,6 +2,7 @@ version: 3
 tasks:
   default:
     cmds:
+    - deno fmt README.md
     - stylua .
     - luacheck . --globals love
     - busted spec/
