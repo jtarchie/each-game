@@ -15,6 +15,7 @@ function love.load()
 	player = Player.new({ 1, 1 })
 	player:grow(4)
 	world = World.new(player, width, height)
+	world:setFoodQuantityWithGrowth(1, 1)
 	timer = 0
 end
 
