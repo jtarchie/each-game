@@ -5,7 +5,7 @@ local direction = require("direction")
 local player, world, timer
 
 local cellSize = 20
-local width, height = 10, 10
+local width, height = 25, 25
 local winWidth, winHeight = cellSize * width, cellSize * height
 
 love = love or {}
@@ -19,7 +19,7 @@ end
 
 function love.update(dt)
 	timer = timer + dt
-	if timer >= 0.15 then
+	if timer >= 0.05 then
 		world:update()
 		timer = 0
 	end
@@ -33,6 +33,10 @@ function love.keypressed(key)
 	local upper = string.upper(key)
 	if direction[upper] ~= nil then
 		player:setDirection(direction[upper])
+	end
+
+	if key == "r" then
+		love.load()
 	end
 end
 

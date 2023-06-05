@@ -18,7 +18,7 @@ function World:update()
 
 	self.player:update()
 	local position = self.player:getPositions()[1]
-	if position.x > self.width or position.y > self.height or position.y < 0 or position.x < 0 then
+	if position.x > self.width or position.y > self.height or position.y < 1 or position.x < 1 then
 		self.player:setAlive(false)
 	end
 end

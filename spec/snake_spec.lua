@@ -96,21 +96,23 @@ describe("snake", function()
 		end)
 
 		it("handles boundaries to the down", function()
-			local width, height = 2, 2
+			local width, height = 5, 5
 
 			local player = snake.NewPlayer({ width / 2, height / 2 })
 			local world = snake.NewWorld(player, width, height)
 			player:setDirection(snake.Direction.DOWN)
 
-			world:update()
-			assert.truthy(player:isAlive())
+			for _ = 1, 3 do
+				world:update()
+				assert.truthy(player:isAlive())
+			end
 
 			world:update()
 			assert.falsy(player:isAlive())
 		end)
 
 		it("handles boundaries to the up", function()
-			local width, height = 2, 2
+			local width, height = 5, 5
 
 			local player = snake.NewPlayer({ width / 2, height / 2 })
 			local world = snake.NewWorld(player, width, height)
@@ -124,7 +126,7 @@ describe("snake", function()
 		end)
 
 		it("handles boundaries to the left", function()
-			local width, height = 2, 2
+			local width, height = 5, 5
 
 			local player = snake.NewPlayer({ width / 2, height / 2 })
 			local world = snake.NewWorld(player, width, height)
@@ -137,4 +139,6 @@ describe("snake", function()
 			assert.falsy(player:isAlive())
 		end)
 	end)
+
+	describe("when a snake grabs a food", function() end)
 end)
