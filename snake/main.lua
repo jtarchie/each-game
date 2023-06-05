@@ -12,7 +12,8 @@ love = love or {}
 
 function love.load()
 	love.window.setMode(winWidth, winHeight)
-	player = Player.new({ 1, 1 }, { 1, 1 }, { 1, 1 }, { 1, 1 }, { 1, 1 }, { 1, 1 })
+	player = Player.new({ 1, 1 })
+	player:grow(4)
 	world = World.new(player, width, height)
 	timer = 0
 end
@@ -37,6 +38,10 @@ function love.keypressed(key)
 
 	if key == "r" then
 		love.load()
+	end
+
+	if key == "g" then
+		player:grow(1)
 	end
 end
 
