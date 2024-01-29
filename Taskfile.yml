@@ -9,6 +9,6 @@ tasks:
     - luacheck . --globals love
   default:
     cmds:
-    - task: lint
     - task: fmt
+    - task: lint
     - busted spec/

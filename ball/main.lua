@@ -2,6 +2,7 @@ local gameRestartDelay = 0
 local world = nil
 local ball = {}
 local boundary = {}
+local maxAllowedSpeed = 800
 
 local function initializeGame()
 	-- Seed the random number generator
@@ -20,7 +21,7 @@ local function initializeGame()
 	ball.body = love.physics.newBody(world, centerX, centerY, "dynamic") -- position in the center
 	ball.shape = love.physics.newCircleShape(35) -- scaled radius of the ball
 	ball.fixture = love.physics.newFixture(ball.body, ball.shape, 1) -- attach shape to body
-	ball.fixture:setRestitution(1) -- bouncy
+	ball.fixture:setRestitution(1.1) -- bouncy
 	ball.body:setLinearDamping(0)
 
 	-- Assign a random velocity to the ball
@@ -57,7 +58,7 @@ local function initializeGame()
 
 		local edgeShape = love.physics.newEdgeShape(x1 - centerX, y1 - centerY, x2 - centerX, y2 - centerY)
 		boundary[i] = love.physics.newFixture(love.physics.newBody(world, centerX, centerY, "static"), edgeShape)
-		boundary[i]:setRestitution(1)
+		boundary[i]:setRestitution(0.99)
 	end
 end
 
@@ -88,6 +89,15 @@ function love.update(dt)
 		end
 	else
 		world:update(dt) -- updates the physics world only if delay is over
+
+		-- Check and cap the ball's velocity
+		local vx, vy = ball.body:getLinearVelocity()
+		local currentSpeed = math.sqrt(vx ^ 2 + vy ^ 2)
+		if currentSpeed > maxAllowedSpeed then
+			local scaledVx = vx / currentSpeed * maxAllowedSpeed
+			local scaledVy = vy / currentSpeed * maxAllowedSpeed
+			ball.body:setLinearVelocity(scaledVx, scaledVy)
+		end
 
 		-- Add the current position to the trail
 		table.insert(ball.trail, 1, { ball.body:getX(), ball.body:getY() })
